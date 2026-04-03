@@ -1,12 +1,15 @@
 # Skills SH
 
-Claude Code Agent 自定义技能集合 -- 技术深度调研工具
+Claude Code Agent 自定义技能集合 -- 技术深度调研 & PRD 需求处理工具
 
 ## 简介
 
-Skills SH 是一套面向 Claude Code Agent 的多技能流水线工具，专注于技术深度调研。通过将调研过程拆分为发现、分析、教程、审阅四个阶段，配合总调度技能，实现从"了解一项技术"到"输出高质量调研报告"的全流程自动化。
+Skills SH 是一套面向 Claude Code Agent 的多技能流水线工具，目前包含两大工具集：
 
-无论是快速评估一个新框架，还是对多项技术进行深度对比分析，亦或是生成可落地的硬核教程，这套技能流水线都能系统化地完成。
+1. **技术深度调研流水线**：通过将调研过程拆分为发现、分析、教程、审阅四个阶段，配合总调度技能，实现从"了解一项技术"到"输出高质量调研报告"的全流程自动化。
+2. **PRD 需求处理流水线**：通过去噪、拆分、多轮澄清三个阶段，将粗糙的产品需求文档（PRD）转化为清晰、结构化的开发需求清单。
+
+无论是快速评估一个新框架，还是对多项技术进行深度对比分析，亦或是生成可落地的硬核教程，技术调研流水线都能系统化地完成。而 PRD 处理流水线则能帮助你将模糊的产品需求梳理为开发团队可直接执行的需求文档。
 
 ## Skill 列表
 
@@ -17,6 +20,14 @@ Skills SH 是一套面向 Claude Code Agent 的多技能流水线工具，专注
 | tech-analyze | 深度分析与对比 | "深度分析 xxx"、"对比 xxx 和 yyy" |
 | tech-tutorial | 硬核教程生成 | "出一份 xxx 教程"、"学习 xxx" |
 | tech-review | 内容质量审阅 | "审阅 xxx 调研"、"检查调研质量" |
+
+### PRD 需求处理流水线
+
+| Skill | 功能 | 触发词 |
+|-------|------|--------|
+| prd-research | 总调度，一键全流程 PRD 处理 | "处理这个 PRD"、"整理需求" |
+| prd-parse | PRD 去噪 + 需求拆分 | "解析这个 PRD"、"拆分需求" |
+| prd-clarify | 多轮需求澄清 | "澄清需求"、"确认需求" |
 
 ## 流水线架构
 
@@ -32,6 +43,17 @@ tech-discover → tech-analyze → tech-tutorial → tech-review
 - **tech-review**：对产出内容进行质量审阅，确保完整性和准确性
 
 **tech-research** 作为总调度器，可一键串联以上四个阶段，自动完成全流程调研。你也可以单独调用某个阶段的技能，按需使用。
+
+### PRD 需求处理流水线
+
+```
+PRD 输入 → prd-parse（去噪+拆分）→ 用户确认拆分 → prd-clarify（多轮澄清）→ 汇总输出
+```
+
+- **prd-parse**：对原始 PRD 进行去噪处理，去除无关内容，然后将需求按前端（按页面）、后端（按模块）、通用等维度拆分为独立需求文件
+- **prd-clarify**：针对拆分后的需求进行多轮澄清，发现并补充缺失信息、矛盾点和模糊描述，确保需求清晰可执行
+
+**prd-research** 作为总调度器，可一键串联以上阶段，自动完成从原始 PRD 到结构化需求清单的全流程。你也可以单独调用某个阶段的技能，按需使用。
 
 ## 项目结构
 
@@ -54,7 +76,18 @@ skills-sh/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   │       └── review-checklist.md
-│   └── tech-research/
+│   ├── tech-research/
+│   │   └── SKILL.md
+│   ├── prd-parse/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── requirement-template.md
+│   │       └── split-overview-template.md
+│   ├── prd-clarify/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       └── clarify-template.md
+│   └── prd-research/
 │       └── SKILL.md
 ├── docs/
 │   └── deep-research/
@@ -82,6 +115,12 @@ cp -r skills-sh/skills/* ~/.claude/skills/
 
 - **全流程调研**：`调研 React Server Components` 或 `深度研究 Rust vs Go`
 - **单独阶段**：`快速了解 WebAssembly`、`深度分析 Next.js 15`、`出一份 Kubernetes 教程`、`审阅 React 调研质量`
+
+#### PRD 需求处理
+
+对 Claude Code 说 `处理这个 PRD`，即可一键启动全流程 PRD 处理。也可以单独调用各阶段：
+
+- **单独阶段**：`解析这个 PRD`、`拆分需求`、`澄清需求`、`确认需求`
 
 ## Skill 开发
 
@@ -136,6 +175,23 @@ research/<tech-name>/
 ```
 
 每个阶段的产出文件可独立使用，也可作为完整调研报告的一部分。
+
+### PRD 处理输出示例
+
+使用 prd-research 进行全流程 PRD 处理后，会生成以下文件结构：
+
+```
+requirements/<project-name>/
+├── 00-prd-raw.md          # 去噪后 PRD
+├── 01-split-overview.md   # 拆分总览
+├── fe-*.md                # 前端需求（按页面）
+├── be-*.md                # 后端需求（按模块）
+├── cm-*.md                # 通用需求
+├── 02-clarify-round-*.md  # 澄清记录
+└── 03-final.md            # 最终需求清单
+```
+
+每个阶段的产出文件可独立使用，最终生成的 `03-final.md` 即为可直接交付给开发团队的结构化需求清单。
 
 ## 许可证
 
