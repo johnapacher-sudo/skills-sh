@@ -1,8 +1,6 @@
 ---
 name: tech-discover
 description: This skill should be used when the user asks to "快速了解 xxx", "xxx 是什么", "发现 xxx 的信息", "介绍一下 xxx", "xxx 概览", or wants a quick overview of a technology. Performs multi-source web search and information gathering to produce a structured technology discovery report.
-version: 1.0.0
-allowed-tools: [WebSearch, WebFetch, Read, Write, Glob, Grep, Bash]
 ---
 
 # 技术发现（tech-discover）

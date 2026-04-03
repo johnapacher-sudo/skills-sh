@@ -1,8 +1,6 @@
 ---
 name: prd-clarify
 description: This skill should be used when the user asks to "澄清需求", "整理待澄清项", "确认需求", or after prd-parse completes. Reads split requirement files, extracts uncertain items, generates clarification checklists, processes user responses, and updates requirement files iteratively until all uncertainties are resolved.
-version: 1.0.0
-allowed-tools: [Read, Write, Glob, Grep, Bash]
 ---
 
 # 需求澄清（prd-clarify）

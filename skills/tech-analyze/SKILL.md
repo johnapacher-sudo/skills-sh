@@ -1,8 +1,6 @@
 ---
 name: tech-analyze
 description: This skill should be used when the user asks to "深度分析 xxx", "对比 xxx 和 yyy", "分析 xxx 的原理", "xxx 架构", or wants a deep technical analysis of a technology. Reads the discovery report and performs in-depth analysis of architecture, principles, and comparison with alternatives.
-version: 1.0.0
-allowed-tools: [WebSearch, WebFetch, Read, Write, Glob, Grep, Bash]
 ---
 
 # tech-analyze 技能

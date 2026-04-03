@@ -1,8 +1,6 @@
 ---
 name: prd-parse
 description: This skill should be used when the user asks to "解析这个 PRD", "拆分需求", "分析需求文档", "整理 PRD", or provides a PRD document that needs to be cleaned and split into structured requirements. Denoises the PRD, splits requirements by frontend pages and backend modules, outputs individual requirement files with an index.
-version: 1.0.0
-allowed-tools: [Read, Write, Glob, Grep, Bash]
 ---
 
 # PRD 解析与需求拆分（prd-parse）

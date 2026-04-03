@@ -1,8 +1,6 @@
 ---
 name: prd-research
 description: This skill should be used when the user asks to "处理这个 PRD", "整理需求", "分析 PRD", "需求分析", "拆解 PRD", or provides a PRD document needing full processing. Orchestrates the complete pipeline: parse (denoise + split) → user confirms split → clarify (multi-round) → final summary output.
-version: 1.0.0
-allowed-tools: [Read, Write, Glob, Grep, Bash]
 ---
 
 # PRD 需求处理总调度（prd-research）

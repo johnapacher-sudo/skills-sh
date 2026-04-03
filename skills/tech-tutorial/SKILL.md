@@ -1,8 +1,6 @@
 ---
 name: tech-tutorial
 description: This skill should be used when the user asks to "出一份 xxx 的教程", "生成 xxx 学习教程", "xxx 教程", "学习 xxx", or wants a comprehensive hands-on tutorial for a technology. Reads discovery and analysis reports to produce a structured tutorial with runnable code examples.
-version: 1.0.0
-allowed-tools: [WebSearch, WebFetch, Read, Write, Glob, Grep, Bash]
 ---
 
 # tech-tutorial 技能说明

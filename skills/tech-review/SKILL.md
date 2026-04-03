@@ -1,8 +1,6 @@
 ---
 name: tech-review
 description: This skill should be used when the user asks to "审阅 xxx 的调研报告", "检查调研质量", "review xxx 调研", or after the tech-tutorial skill completes. Reviews all generated research documents for accuracy, completeness, consistency, and overall quality.
-version: 1.0.0
-allowed-tools: [WebSearch, WebFetch, Read, Write, Glob, Grep, Bash]
 ---
 
 # tech-review 技能说明

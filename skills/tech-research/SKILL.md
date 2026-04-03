@@ -1,8 +1,6 @@
 ---
 name: tech-research
 description: This skill should be used when the user asks to "调研 xxx", "全面调研 xxx", "深度研究 xxx", "research xxx", "技术调研", or wants a complete technology research report with tutorial. Orchestrates the full pipeline: discover → analyze → tutorial → review.
-version: 1.0.0
-allowed-tools: [WebSearch, WebFetch, Read, Write, Glob, Grep, Bash]
 ---
 
 # tech-research — 技术调研总调度
