@@ -1,6 +1,8 @@
 ---
 name: tech-analyze
 description: This skill should be used when the user asks to "深度分析 xxx", "对比 xxx 和 yyy", "分析 xxx 的原理", "xxx 架构", or wants a deep technical analysis of a technology. Reads the discovery report and performs in-depth analysis of architecture, principles, and comparison with alternatives.
+version: 1.0.0
+allowed-tools: [WebSearch, WebFetch, Read, Write, Glob, Grep, Bash]
 ---
 
 # tech-analyze 技能
@@ -13,17 +15,17 @@ description: This skill should be used when the user asks to "深度分析 xxx",
 
 在执行本技能之前，必须确认以下条件已满足：
 
-1. 已通过 `tech-discover` 技能完成技术发现，且发现报告已保存至 `research/<tech-name>/01-discovery.md`。
+1. 已通过 `tech-discover` 技能完成技术发现，且发现报告已保存至 `<tech-name>-research/01-discovery.md`。
 2. 发现报告内容完整，至少包含技术简介、核心特性、官方资源链接和初步评估等关键信息。
 3. 如果发现报告不存在或内容不完整，提示用户先执行 `tech-discover` 技能。
 
-执行开始时，使用 `Read` 工具读取 `research/<tech-name>/01-discovery.md`，提取以下关键信息：技术名称与定位、核心特性列表、官方资源链接、发现报告中标注的需要深入了解的知识盲点、初步评估中提到的疑问点。将这些信息作为后续分析的基础输入。
+执行开始时，使用 `Read` 工具读取 `<tech-name>-research/01-discovery.md`，提取以下关键信息：技术名称与定位、核心特性列表、官方资源链接、发现报告中标注的需要深入了解的知识盲点、初步评估中提到的疑问点。将这些信息作为后续分析的基础输入。
 
 ## 执行流程
 
 ### 第一步：读取并解析发现报告
 
-读取 `research/<tech-name>/01-discovery.md`，识别以下要点：
+读取 `<tech-name>-research/01-discovery.md`，识别以下要点：
 
 - 技术的官方名称、定位和核心定位描述
 - 列出的核心特性，标记出需要深入分析的特性
@@ -132,7 +134,7 @@ description: This skill should be used when the user asks to "深度分析 xxx",
 
 使用 `Read` 工具读取 `references/output-template.md` 模板，按照模板结构将所有分析结果填充为完整报告。确保报告各章节内容完整、逻辑连贯、数据准确。
 
-使用 `Write` 工具将最终报告保存至 `research/<tech-name>/02-analysis.md`。
+使用 `Write` 工具将最终报告保存至 `<tech-name>-research/02-analysis.md`。
 
 ## 质量约束
 
@@ -150,7 +152,7 @@ description: This skill should be used when the user asks to "深度分析 xxx",
 
 ## 输出规范
 
-最终输出文件保存路径：`research/<tech-name>/02-analysis.md`
+最终输出文件保存路径：`<tech-name>-research/02-analysis.md`
 
 输出文件格式要求：
 - 使用标准 Markdown 格式

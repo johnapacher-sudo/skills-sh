@@ -1,6 +1,8 @@
 ---
 name: tech-discover
 description: This skill should be used when the user asks to "快速了解 xxx", "xxx 是什么", "发现 xxx 的信息", "介绍一下 xxx", "xxx 概览", or wants a quick overview of a technology. Performs multi-source web search and information gathering to produce a structured technology discovery report.
+version: 1.0.0
+allowed-tools: [WebSearch, WebFetch, Read, Write, Glob, Grep, Bash]
 ---
 
 # 技术发现（tech-discover）
@@ -79,18 +81,18 @@ description: This skill should be used when the user asks to "快速了解 xxx",
 将格式化后的报告保存到以下路径：
 
 ```
-research/{{tech-name}}/01-discovery.md
+{{tech-name}}-research/01-discovery.md
 ```
 
 其中 `{{tech-name}}` 使用技术名称的小写英文形式，单词之间用连字符连接。例如：
 
-- React → `research/react/01-discovery.md`
-- Kubernetes → `research/kubernetes/01-discovery.md`
-- Node.js → `research/nodejs/01-discovery.md`
+- React → `react-research/01-discovery.md`
+- Kubernetes → `kubernetes-research/01-discovery.md`
+- Node.js → `nodejs-research/01-discovery.md`
 
 保存前执行以下操作：
 
-- 使用 Bash 工具创建 `research/{{tech-name}}/` 目录（如不存在）。
+- 使用 Bash 工具创建 `{{tech-name}}-research/` 目录（如不存在）。
 - 确认文件内容完整，所有模板章节均已填写。
 - 保存完成后，向用户输出文件路径，并简要概括报告中的关键发现。
 
@@ -135,7 +137,7 @@ research/{{tech-name}}/01-discovery.md
 
 ### 输出文件
 
-- 路径：`research/{{tech-name}}/01-discovery.md`
+- 路径：`{{tech-name}}-research/01-discovery.md`
 - 格式：Markdown，UTF-8 编码
 - 模板：严格遵循 `references/output-template.md` 的章节结构
 
