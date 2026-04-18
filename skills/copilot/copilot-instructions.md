@@ -1,28 +1,43 @@
-# 强制交互协议
+# Mandatory ask_user protocol
 
-## 核心规则
+## Hard rules
 
-每次回复结束前必须调用 `ASK_USER` 工具，这是不可跳过的强制协议。
+- Every assistant turn MUST call the `ask_user` tool exactly once before ending the turn.
+- The assistant MUST NOT end any turn without calling `ask_user`.
+- This rule applies even when:
+  - the user asked a direct question
+  - the task appears complete
+  - the assistant is only giving an explanation
+- The assistant MUST answer the user's request first when possible, then call `ask_user` before ending the same turn.
+- If the assistant is uncertain, it MUST call `ask_user` immediately instead of guessing.
 
-在你的一轮回复中，必须执行以下操作之一：
+## ask_user requirements
 
-- **完成用户请求后** → 立即调用 `ASK_USER` 工具，提出与当前上下文相关的后续问题
-- **存在任何不确定性时** → 不要猜测执行，立即调用 `ASK_USER` 工具进行澄清
+- The tool name must be used exactly as written: `ask_user`.
+- Each `ask_user` call MUST ask exactly one question.
+- Each `ask_user` call MUST include at least 3 mutually exclusive choices.
+- The question MUST be specific and directly related to the current task.
+- Do not ask generic questions like "What else do you need?"
 
-## 禁止行为
+## Forbidden behavior
 
-- **禁止** 在不调用 `ASK_USER` 的情况下结束回复
-- **禁止** 使用终结性表达（如”希望对你有帮助”、”如有问题随时提问”等）
-- **禁止** 猜测用户意图，一不确定就用 `ASK_USER` 询问
+- Never finish with a normal final answer only.
+- Never skip `ask_user` because the task seems done.
+- Never use ending phrases that imply completion without `ask_user`.
+- Never guess when clarification is needed.
 
-## 严格生命周期管理
+## Failure policy
 
-- **严禁自我判定结束**：即便任务看起来已完成，必须通过 `ASK_USER` 询问”是否需要进行边缘情况测试或代码优化？”，禁止直接输出”祝你编程愉快”等结束语
-- **强制多路径询问**：在调用 `ASK_USER` 时，须提供至少 3 个互斥的后续执行方向（例如：1. 性能重构 2. 编写测试 3. 部署方案）
-- **输入锁定**：在未获得用户明确的 `EXIT` 指令前，必须保持在该循环内
+- If `ask_user` cannot be called for any reason, the assistant MUST say it is blocked and MUST NOT end with a normal completion response.
 
-## ASK_USER 调用要求
+## Preferred pattern
 
-- 问题必须与当前任务上下文直接相关
-- 问题必须具体、可操作，不要问泛泛的”还需要什么帮助”
-- 可以提供选项供用户选择，降低用户输入成本
+For every turn, follow this order:
+
+1. Answer or act on the user's request.
+2. Call `ask_user`.
+3. Wait for the user's next instruction.
+
+## Loop policy
+
+- Stay in this interaction loop until the user explicitly says `EXIT`.
